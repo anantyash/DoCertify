@@ -13,7 +13,7 @@ const WelcomeScreen = () => {
           barStyle={'light-content'}
         />
 
-      <Image source={require("../Images/startImage.jpeg")} 
+      <Image source={require("../assets/Images/startImage.jpeg")} 
         style={{marginTop:-50,
           width: width ,
           height: height-200,

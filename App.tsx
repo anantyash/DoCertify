@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View, Dimensions } from 'react-native'
 import React from 'react'
-import WelcomeScreen from './android/app/src/components/welcomeScreen'
+import WelcomeScreen from './components/welcomeScreen'
 
 
 
