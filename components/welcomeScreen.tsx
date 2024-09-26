@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, StatusBar } from 'react-native'
 import React from 'react'
 
+import{NativeStackScreenProps} from '@react-navigation/native-stack'
+import {RootStackParamList} from '../App'
 
-const WelcomeScreen = () => {
+type WelProps = NativeStackScreenProps<RootStackParamList, 'WelcomeScreen'>
+
+const WelcomeScreen = ({navigation}: WelProps) => {
     const { width, height } = Dimensions.get('window');
   return (
     <View style={styles.screen}>
@@ -24,7 +28,7 @@ const WelcomeScreen = () => {
       <Text style={styles.appname}>DoCertify</Text>
 
       {/* For Button */}
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('LoginPage')}>
         <Text style={styles.btntxt}>Next {' >>'}</Text>
       </TouchableOpacity>
     </View>
