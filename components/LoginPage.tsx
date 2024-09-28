@@ -1,41 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
+  useColorScheme,
 } from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const LoginPage = () => {
-  const iconButton = <FontAwesome5 name="fa-eye" size={15} />;
+import {Button, Divider, IconButton, TextInput} from 'react-native-paper';
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../App";
+
+type Prop = NativeStackScreenProps<RootStackParamList,'LoginPage'>;
+
+const LoginPage = ({navigation}:Prop) => {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <View style={styles.container}>
-      
-      <StatusBar 
-          barStyle={'dark-content'}
-          backgroundColor={'transparent'} 
+    <ScrollView
+      style={[
+        styles.container,
+        isDarkMode ? styles.darkContainer : styles.lightContainer,
+      ]}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={isDarkMode ? '#101A23' : '#e6e8e6'}
       />
 
       <View style={styles.head}>
         <Text style={styles.heading}>Login</Text>
         <View style={styles.hr} />
       </View>
+      <View style={styles.inputArea}>
+        <TextInput
+          label="Username"
+          value={username}
+          onChangeText={text => setUsername(text)}
+          mode="outlined"
+          style={styles.inputAreaText}
+        />
+        <TextInput
+          mode="outlined"
+          label="Password"
+          value={password}
+          onChangeText={text => setPassword(text)}
+          secureTextEntry={!showPassword}
+          right={<TextInput.Icon
+            icon={showPassword ? 'eye-off' : 'eye'}
+            onPress={() => setShowPassword(!showPassword)}
+          />}
+          style={styles.inputAreaText}
+          
+          
+        />
+        <Button mode='text' style={styles.link} onPress={() => console.warn('Forget Pressed')}>Forget Password?</Button>
 
-      <TextInput style={styles.inputArea} placeholder="Username" />
-
-      <TextInput style={styles.inputArea} placeholder="Password" secureTextEntry={true}/>
-
-      <TouchableOpacity>
-        <Text style={styles.link}>Forget Password?</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.btn}>
-        <Text style={styles.btntxt}>Login</Text>
-      </TouchableOpacity>
-    </View>
+        <Button mode='contained' style={styles.btn} labelStyle={styles.btntxt} onPress={() =>navigation.replace('Home')}>Login</Button>
+      </View>
+      <View style={{backgroundColor:'red', marginTop:30, flex:1, alignItems:'center' }}>
+     <Divider/>
+     <Text>--- OR ---</Text>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -43,57 +74,58 @@ export default LoginPage;
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft:'10%'
+    flex: 1,
+    // paddingLeft:'10%',
+    // paddingRight:'10%',
+    // backgroundColor: 'yellow',
+    // alignItems:'center'
+  },
+  lightContainer: {
+    backgroundColor:'#e6e8e6'
+  },
+  darkContainer: {
+    backgroundColor:'#101A23',
   },
   heading: {
     color: '#101A23',
-    // fontWeight:'bold',
     fontSize: 40,
     fontFamily: 'JosefinSans-Bold',
   },
-  hr:{
+
+  hr: {
     paddingTop: 10,
-    marginLeft: -10,
-    borderBottomWidth:1,
-    width:'90%'
+    borderBottomWidth: 1,
+    width: '90%',
+
   },
 
   head: {
-    // alignItems: 'center',   
+
+    marginLeft: '10%',
   },
   inputArea: {
-    // marginLeft: '10%',
     marginTop: '5%',
-    padding: '2%',
     width: '80%',
-    fontSize: 20,
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: '#101A23',
-    color: '#A2CF2A',
+    alignSelf: 'center',
   },
-  link:{
-    padding:5,
-    color:'blue',
-    
+  inputAreaText:{
+    fontSize:19
   },
-  btn:{
-    // alignContent:'center',
-    marginTop: '5%',
-    // marginLeft: '28%',
-    width: '80%',
-    // height:80,
-    borderRadius:5,
-    borderWidth:2,
-    // borderColor: '#101A23',
-    backgroundColor:'#A2CF2A',
-  },
+  inputAreaLabel:{},
+  link: {
   
-  btntxt:{
-    textAlign:'center',
-    fontSize: 20,
-    fontWeight:'bold',
-    padding:5,
-    color: '#EFEFEF'
-  }
+    color: 'blue',
+    flex:1,
+    alignItems:'flex-start'
+  },
+  btn: {
+    marginTop: '5%',
+    backgroundColor: '#A2CF2A',
+    elevation:5,
+  },
+
+  btntxt: {
+    padding: 5,
+    fontSize: 24,
+  },
 });

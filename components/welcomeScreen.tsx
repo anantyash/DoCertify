@@ -28,7 +28,7 @@ const WelcomeScreen = ({navigation}: WelProps) => {
       <Text style={styles.appname}>DoCertify</Text>
 
       {/* For Button */}
-      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('LoginPage')}>
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.replace('LoginPage')}>
         <Text style={styles.btntxt}>Next {' >>'}</Text>
       </TouchableOpacity>
     </View>
